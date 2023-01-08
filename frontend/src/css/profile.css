@@ -1,0 +1,272 @@
+.profile-section-header{
+    text-align: center;
+    font-size: 4.5em;
+    text-decoration: underline;
+}
+
+.profile-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 5vh;
+}
+
+/**CSS FOR PROFILE SECTION 1 HERE**/
+
+.profile-section1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    height: 26vh;
+    border-radius: 2em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
+    align-items: center;
+}
+
+.profile-details{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5em;
+    justify-content: space-around;
+}
+
+.profile-transaction{
+    color: azure;
+    font-size: 1.6em
+}
+
+.profile-name{
+    color: rgb(255, 255, 255);
+    font-size: 2.5em;
+    padding-bottom: 0.4em;
+    font-weight: 600;
+}
+
+.profile-address{
+    font-size: 1em;
+    color: aliceblue;
+}
+
+.profile-budget-change{
+    background-color: transparent;
+    border: none;
+    color: aliceblue;
+}
+
+.profile-budget-change:hover{
+    cursor: pointer;
+}
+
+.profile-button{
+    padding-right: 6em;
+}
+
+.profile-signout{
+    height: 4em;
+    border-radius: 1em;
+    background-color: black;
+    color: aliceblue;
+    font-weight: 600;
+}
+
+.profile-signout:hover{
+    background-color: aliceblue;
+    color: black;
+    border-color: aliceblue;
+    cursor: pointer;
+}
+
+/*******************CSS FOR PROFILE SEECTION 2 HERE******************/
+
+.profile-section2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(103, 75, 75, 0.4);
+    backdrop-filter: blur(5px);
+    height: 50vh;
+    border-radius: 2em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    align-items: center;
+}
+
+.profile-tabs{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 4em;
+    background-color: rgba(103, 75, 75, 0.4);
+    height: 40vh;
+    align-items: center;
+    border-radius: 2em;
+    width: 16vw;
+}
+
+.profile-tabs-option{
+    height: 6vh;
+    width: 10vw;
+    background-color: black;
+    color: aliceblue;
+    border-radius: 1em;
+}
+
+.profile-current-tab{
+    background-color: aliceblue;
+    color: black;
+    border-color: aliceblue;
+}
+
+.profile-tabs-option:hover{
+    background-color: aliceblue;
+    color: black;
+    border-color: aliceblue;
+    cursor: pointer;
+}
+
+/*****************Details Tabs*****************/
+
+.profile-display{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-right: 2.5em;
+    background-color: rgba(103, 75, 75, 0.4);
+    height: 40vh;
+    align-items: center;
+    border-radius: 2em;
+    width: 70vw;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+}
+
+.profile-display::-webkit-scrollbar {
+    display: none;
+  }
+
+/*******?Details Tab CSS**/
+
+.profile-user-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 5vh;
+}
+
+.profile-display-details-first{
+    color: black;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.profile-display-details-second{
+    color: aliceblue;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+/*****?payment TAB CARDS CSS**/
+
+.profile-display-payment-heading{
+    color: aliceblue;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.profile-display-payment-card{
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(103, 75, 75, 0.4);
+    width: 60vw;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 2em;
+    backdrop-filter: blur(10px);
+    padding-left: 1em;
+    padding-bottom: 0.6em;
+    padding-top: 0.6em;
+    margin-bottom: 1em;
+}
+
+.profile-display-payment-status{
+    display: flex;
+    flex-direction: row;
+}
+.profile-display-payment-status-color{
+    width: 1em;
+    height: 1em;
+    background-color: green;
+    margin-right: 0.5em;
+    border-radius: 2em;
+}
+
+.profile-display-payment-image{
+    width: auto;
+    height: auto;
+    margin-right: 1.5em;
+}
+
+.profile-request-button{
+    border-radius: 1em;
+    width: 6vw;
+    border: none;
+    background-color: black;
+    color: white;
+}
+
+.profile-request-button:hover{
+    cursor: pointer;
+    background-color: aliceblue;
+    color: black;
+}
+
+.profile-friend-search{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-search-bar{
+    border-radius: 1em;
+}
+
+.profile-search-button{
+    margin-left: 0.3em;
+    border-radius: 1em;
+    border: none;
+}
+
+.profile-search-button:hover{
+    cursor: pointer;
+}
+
+.profile-search-result{
+    border-radius: 2em;
+}
+
+.profile-search-result:hover{
+    cursor: pointer;
+}
+/*CSS For the Background*/
+.profile-background{
+    z-index: -2;
+    position: absolute;
+    height: auto;
+    width: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(../assets/clumsy.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: aliceblue;
+}
