@@ -54,7 +54,7 @@ const Home = () =>{
                         <input type='password' name = 'password' className = "home-form-input" value={credentials.password} onChange={onChange}/>
                         <div className="home-form-buttons">
                             <input type="button" value="Login" className='home-button'onClick={handleSubmit} />
-                            <input type="button" value="Back" className='home-button' />
+                            <input type="button" value="Back" className='home-button' onClick={()=>{navigate("/signup")}} />
                         </div>
                     </div>
                 </div>

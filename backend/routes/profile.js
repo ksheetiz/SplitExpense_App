@@ -93,7 +93,7 @@ router.post("/set_friends", fetchuser,async(req , res) =>{
         let friend = await User.findOne({email});
 
         if(!friend){
-            return res.status(400).json({error : "User Not Found !"});
+            return res.status(400).json({success : false,error : "User Not Found !"});
         }
 
         friend.friends.push({id : user._id, name : user.name, amount : 0});
@@ -104,7 +104,7 @@ router.post("/set_friends", fetchuser,async(req , res) =>{
 
         await user.save();
 
-        res.json({success : "Friend added Successfully !"});
+        res.json({success : true,query : "Friend added Successfully !"});
     }
     catch(error){
         console.log(error.message);

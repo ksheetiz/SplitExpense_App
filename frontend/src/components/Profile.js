@@ -9,25 +9,28 @@ import Lenders from './Lenders';
 import Friends from './Friends';
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineUserAdd, AiFillFileAdd } from "react-icons/ai";
-import Modal from 'react-modal';
+import Modal1 from './Modal1';
+
 
 const Profile = () =>{
     const navigate = useNavigate();
-
-    const [modalIsOpen, setIsOpen] = useState(false);
+    
     const [paymentDetail, setpaymentDetail] = useState({name : "", amount : ""});
 
     const [user, setUser] = useState({name : ""});
     const [payments, setpayments] = useState([]);
     const [friends, setfriends] = useState([]);
     const [requests, setrequests] = useState([]);
+    const [lenders, setLenders] = useState([]);
     const [CurrTab, setCurrTab] = useState("payments");
+    const [Name, setName] = useState("");
+    const [SearchResult, setResult] = useState({name : "Name Will appear Here !"});
 
     const handleLogout = () =>{
         localStorage.removeItem("token");
         toast.success("Logged Out Successfully !");
         setTimeout(() => {}, 2000);
-        navigate("/login");
+        navigate("/");
     }
 
     useEffect(() => {
@@ -38,6 +41,7 @@ const Profile = () =>{
         getPayments();
         getFriends();
         getRequests();
+        getLends();
     },[]);
 
     async function fetchUser() {
@@ -88,6 +92,18 @@ const Profile = () =>{
         setrequests(json);
     }
 
+    const getLends = async() =>{
+        const response = await fetch(`http://localhost:5000/api/request/fetch_all_lends`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              token: localStorage.getItem("token"),
+            },
+        });
+        const json = await response.json();
+        setLenders(json);
+    }
+
     const deletePayment = async(id)=>{
         console.log(id);
         const response = await fetch(`http://localhost:5000/api/profile/delete_payment`, {
@@ -117,61 +133,65 @@ const Profile = () =>{
         });
 
         const pay = await response.json();
-        setPayments(pay);
-    }
-
-    function openModal() {
-        setIsOpen(!modalIsOpen);
+        getPayments();
+        fetchUser();
     }
 
     const handlePayment = () =>{
-        openModal();
         setPayments();
     }
 
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
+    const changeBudget = async() =>{
+
     }
 
-    let subtitle;
-    const customStyles = {
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-        },
-    };
-    
-    const onChange = (e) => {
-        setpaymentDetail({ ...paymentDetail, [e.target.name]: e.target.value });
-    };
+    const changeSpend = () =>{
+
+    }
+
+    const SearchFriend = async()=>{
+        const response = await fetch(`http://localhost:5000/api/auth/search_user`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                token: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({email : Name}),
+        });
+        const json = await response.json();
+
+        if(!json.success){
+            toast.error("User Not Found !!");
+        }
+        else{
+            setResult(json.user[0]);
+            console.log(json.user[0]);
+        }
+    }
+
+    const handleFriend = async() =>{
+        const response = await fetch(`http://localhost:5000/api/profile/set_friends`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                token: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({email : Name}),
+        });
+
+        const json = await response.json();
+
+        if(!json.success){
+            toast.error(json.error)
+        }else{
+            toast.success(json.query);
+            getFriends();
+        }
+    }
 
     return(
         <>
         <Toaster/>
-        <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={openModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-        >
-            <div className="modal-body">
-                <div className="modal-heading">Add Payment</div>
-                <p>Name</p>
-                <input type="text" name="name" value={paymentDetail.name} onChange={onChange}/>
-                <p>Amount</p>
-                <input type="text" name="amount" value={paymentDetail.amount} onChange={onChange}/>
-                <div className="modal-buttons-group">
-                    <button onClick={handlePayment}>ADD</button>
-                    <button onClick={openModal}>CLOSE</button>
-                </div>
-            </div>
-        </Modal>
             <div className="profile-background">
                 <div className="profile-section-header">Money Tracker</div>
                 <div className="profile-body">
@@ -182,8 +202,8 @@ const Profile = () =>{
                             <div className="profile-address">Dehradun, India</div>
                         </div>
                         <div className="profile-details">
-                            <div className="profile-transaction">Current Budget : Rs {user.budget} <button className='profile-budget-change'><BsFillPenFill/></button></div>
-                            <div className="profile-transaction">Total Spending : Rs {user.spend}</div>
+                            <div className="profile-transaction">Current Budget : Rs {user.budget} <button className='profile-budget-change' onClick={changeBudget}><BsFillPenFill/></button></div>
+                            <div className="profile-transaction">Total Spending : Rs {user.spend} <button className='profile-budget-change' onClick={changeSpend}><BsFillPenFill/></button></div>
                         </div>
                         <div className="profile-button">
                             <button className="profile-signout" onClick={handleLogout}>Signout</button>
@@ -199,9 +219,7 @@ const Profile = () =>{
                         <div className="profile-display">
                             {CurrTab === "payments" ? <>
                                                         <div className="profile-display-payment-heading">PAYMENTS</div>
-                                                        <div className="profile-display-payment-image">
-                                                                <button className='profile-search-result' onClick={openModal}><AiFillFileAdd/></button>
-                                                        </div>
+                                                        <Modal1 handleClick={handlePayment} paymentDetail = {paymentDetail} setpaymentDetail = {setpaymentDetail}/>
                                                         {payments.map((item)=>{
                                                             return(
                                                                 <Payments key = {item._id} id = {item._id} name = {item.name} amount = {item.amount} deletePayment={deletePayment}/>
@@ -220,23 +238,31 @@ const Profile = () =>{
                                                         <div className="profile-display-payment-heading">FRIENDS</div>
                                                         <div className="profile-display-payment-card">
                                                             <div className="profile-friend-search">
-                                                                <FaSearch/><input type="text" name="ID" className='profile-search-bar'/>
+                                                                <FaSearch/><input type="text" name="ID" className='profile-search-bar' value={Name} onChange = {(e)=>{setName(e.target.value)}}/>
                                                                 <div className="profile-friend-search-button">
-                                                                    <button className='profile-search-button'>Search</button>
+                                                                    <button className='profile-search-button' onClick={SearchFriend}>Search</button>
                                                                 </div>
                                                             </div>
-                                                            <div className="profile-display-payment-name">Samsung Note 10</div>
+                                                            <div className="profile-display-payment-name">{SearchResult.name}</div>
                                                             <div className="profile-display-payment-image">
-                                                                <button className='profile-search-result'><AiOutlineUserAdd/></button>
+                                                                <button className='profile-search-result' onClick={handleFriend}><AiOutlineUserAdd/></button>
                                                             </div>
                                                         </div>
                                                         {friends.map((item)=>{
                                                             return(
-                                                                <Friends key = {item._id} id = {item.id} name = {item.name} amount = {item.amount}/>
+                                                                <Friends key = {item._id} id = {item._id} getRequests={getLends} name = {item.name}/>
                                                             )
                                                         })}
                                                     </>: 
-                                                    <Lenders/> }
+                                                    <>
+                                                    <div className="profile-display-payment-heading">LENDERS</div>
+                                                    {lenders.map((item) =>{
+                                                        return(
+                                                            <Lenders key = {item._id} name = {item.name} amount = {item.amount}/>
+                                                        )
+                                                    })}
+                                                    </>
+                                                     }
                         </div>
                         
                     </div>

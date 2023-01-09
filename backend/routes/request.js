@@ -33,16 +33,16 @@ router.post("/create_request",fetchuser,async(req,res)=>{
     try{
         const {id, name, amount} = req.body;
 
-        // let request = await Request.create({
-        //     user : id,
-        //     requester : req.user.id,
-        //     name : name,
-        //     amount : amount
-        // });
+        let request = await Request.create({
+            user : id,
+            requester : req.user.id,
+            name : name,
+            amount : amount
+        });
 
-        let pay = await User.updateOne({_id : req.user.id, "friends.id" : id},{$inc: {"friends.$.amount": amount}});
+        //let pay = await User.updateOne({_id : req.user.id, "friends.id" : id},{$inc: {"friends.$.amount": amount}});
 
-        res.json({success : true, pay});
+        res.json({success : true, request});
     }catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error !");

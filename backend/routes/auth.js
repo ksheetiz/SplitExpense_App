@@ -79,4 +79,20 @@ router.get("/getuser", fetchuser, async (req, res) => {
     }
   });
 
+router.post("/search_user", fetchuser, async (req, res) => {
+    try {
+      const {email} = req.body;
+      const user = await User.find({email : email});
+
+      if(!user){
+        return res.status(400).json({success : false, error : "Person with this Credential does'nt exist"});
+    }
+
+      res.send({success : true,user});
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal server error !");
+    }
+  });
+
 module.exports = router;

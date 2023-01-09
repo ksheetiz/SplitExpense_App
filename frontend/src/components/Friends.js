@@ -1,5 +1,6 @@
+import Modal2 from "./Modal2";
 
-const Friends = ({name, amount, id}) =>{
+const Friends = ({name,id, getRequests}) =>{
 
 
     return(
@@ -10,7 +11,7 @@ const Friends = ({name, amount, id}) =>{
                                     Profile ID : {id}
                                 </div>
                                 <div className="profile-display-payment-image">
-                                    <div className="profile-payment-amount">Rs. {amount}</div>
+                                    <Modal2 name = {name} id = {id} getRequests= {getRequests}/>
                                 </div>
                             </div>
         </>
