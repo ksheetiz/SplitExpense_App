@@ -10,6 +10,7 @@ import Friends from './Friends';
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineUserAdd, AiFillFileAdd } from "react-icons/ai";
 import Modal1 from './Modal1';
+import Modal3 from './Modal3';
 
 
 const Profile = () =>{
@@ -142,7 +143,7 @@ const Profile = () =>{
     }
 
     const changeBudget = async() =>{
-
+        
     }
 
     const changeSpend = () =>{
@@ -202,8 +203,8 @@ const Profile = () =>{
                             <div className="profile-address">Dehradun, India</div>
                         </div>
                         <div className="profile-details">
-                            <div className="profile-transaction">Current Budget : Rs {user.budget} <button className='profile-budget-change' onClick={changeBudget}><BsFillPenFill/></button></div>
-                            <div className="profile-transaction">Total Spending : Rs {user.spend} <button className='profile-budget-change' onClick={changeSpend}><BsFillPenFill/></button></div>
+                            <div className="profile-transaction">Current Budget : Rs {user.budget} <Modal3 fetchUser = {fetchUser} update = {"update_budget"}/></div>
+                            <div className="profile-transaction">Total Spending : Rs {user.spend} <Modal3 fetchUser = {fetchUser} update = {"update_spend"}/></div>
                         </div>
                         <div className="profile-button">
                             <button className="profile-signout" onClick={handleLogout}>Signout</button>

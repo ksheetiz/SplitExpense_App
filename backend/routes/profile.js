@@ -52,7 +52,7 @@ router.put("/update_budget", fetchuser, async (req, res) => {
         
         let user =  await User.findByIdAndUpdate(req.user.id, {$set : data});
 
-        res.json(user);
+        res.json({success : true ,user});
     }catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error !");
